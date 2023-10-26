@@ -1,3 +1,2 @@
 __pycache__
-migratinos/
-*.sqlite3
+migrations/
