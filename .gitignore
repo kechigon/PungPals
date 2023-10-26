@@ -19,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+*.sqlite3
+__pycache__
+migrations/
