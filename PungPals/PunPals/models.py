@@ -37,7 +37,7 @@ class Taikyoku3(models.Model):
                        (self.userSya, self.syaScore, 1)]
         # sort by score and then by user rank in descending order
         score_list.sort(key = lambda x: (x[1], x[2]), reverse=True)
-        return [user.name for user, _, _ in score_list]
+        return [(user.name, score) for user, score, _ in score_list]
 
 class Taikyoku4(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -57,12 +57,12 @@ class Taikyoku4(models.Model):
                        (self.userPe, self.peScore, 1)]
         # sort by score and then by user rank in descending order
         score_list.sort(key = lambda x: (x[1], x[2]), reverse=True)
-        return [user.name for user, _, _ in score_list]
+        return [(user.name, score) for user, score, _ in score_list]
 
 class Senseki3(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rankMean = models.FloatField()
+    rankMean = models.FloatField(default=0)
     firstNum = models.IntegerField(default=0)
     secondNum = models.IntegerField(default=0)
     thirdNum = models.IntegerField(default=0)
@@ -72,6 +72,7 @@ class Senseki3(models.Model):
     thirdRate = models.FloatField()
     outRate = models.FloatField()
     gameNum = models.IntegerField()
+    scoreSum = models.BigIntegerField()
     scoreMean = models.FloatField()
 
 class Senseki4(models.Model):
@@ -89,4 +90,5 @@ class Senseki4(models.Model):
     fourthRate = models.FloatField()
     outRate = models.FloatField()
     gameNum = models.IntegerField()
+    scoreSum = models.BigIntegerField()
     scoreMean = models.FloatField()
