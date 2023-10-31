@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PungPals</title>
-</head>
-<body>
-    <p>test</p>
-</body>
-</html>
+{% extends "PunPals/base.html" %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">PungPals</h1>
+    <div class="col-lg-6 mx-auto"></div>
+        <p class="mb-4">あなたの麻雀戦績をのこしませんか？<br>
+            対局結果を記録することで成長を実感し、戦術の研鑽を積みましょう！
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">log in</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">sigh in</button>
+          </div>
+    </div>
+</div>
+{% endblock %}
