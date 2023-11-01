@@ -1,0 +1,24 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}sign up{% endblock %}
+
+{% block content %}
+<h2>新規登録</h2>
+    
+    <form  method="post">
+        {% csrf_token %}
+        <div>
+            <label for="username">名前:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        
+        <div>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <div>
+            <button type="submit">送信</button>
+        </div>
+    </form>
+{% endblock %}
