@@ -1,13 +1,28 @@
-from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView
+from django.shortcuts import render, redirect
 
 from .models import User, Room, Taikyoku3, Taikyoku4, Senseki3, Senseki4
+from .form import SignUpForm
 
 class Home(TemplateView):
     template_name = "PunPals/home.html"
 
-class SignUp(CreateView):
-    template_name = "PunPals/signup.html"
+def SignUp(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            return redirect('login')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'PunPals/signup.html', {'form': form})
+
+class Login(TemplateView):
+    template_name = "PunPals/login.html"
 
 class UserHome(ListView):
     template_name = "PunPals/user_home.html"
