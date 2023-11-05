@@ -1,32 +1,33 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 # Create your models here.
-class User(models.Model):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100, primary_key=True)
-    passwd = models.CharField(max_length=100)
+    password = models.CharField(max_length=150)
 
-    def joindRoomNum(self):
+    def joinedRoomNum(self):
         return len(self.room_set.all())
 
     def __str__(self):
-        return self.name
+        return self.name      
 
 class Room(models.Model):
-    roomName = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     passwd = models.CharField(max_length=100)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(CustomUser)
 
     def usersNum(self):
         return len(self.users.all())
 
     def __str__(self):
-        return self.roomName
+        return self.name
 
 class Taikyoku3(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    userTon = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku3_userTon")
-    userNan = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku3_userNan")
-    userSya = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tiakyoku3_userSya")
+    userTon = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku3_userTon")
+    userNan = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku3_userNan")
+    userSya = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tiakyoku3_userSya")
     tonScore = models.IntegerField()
     nanScore = models.IntegerField()
     syaScore = models.IntegerField()
@@ -41,10 +42,10 @@ class Taikyoku3(models.Model):
 
 class Taikyoku4(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    userTon = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku4_userTon")
-    userNan = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku4_userNan")
-    userSya = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku4_userSya")
-    userPe = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taikyoku4_userPei")
+    userTon = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku4_userTon")
+    userNan = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku4_userNan")
+    userSya = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku4_userSya")
+    userPe = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="taikyoku4_userPei")
     tonScore = models.IntegerField()
     nanScore = models.IntegerField()
     syaScore = models.IntegerField()
@@ -61,7 +62,7 @@ class Taikyoku4(models.Model):
 
 class Senseki3(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     rankMean = models.FloatField(default=0)
     firstNum = models.IntegerField(default=0)
     secondNum = models.IntegerField(default=0)
@@ -77,7 +78,7 @@ class Senseki3(models.Model):
 
 class Senseki4(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     rankMean = models.FloatField()
     firstNum = models.IntegerField(default=0)
     secondNum = models.IntegerField(default=0)
