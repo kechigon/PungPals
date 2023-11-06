@@ -1,16 +1,36 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 # Create your models here.
+class CustomUserManager(BaseUserManager):
+    
+    def create_user(self, username, password, **extra_fields):
+        if not username or not password:
+            raise ValueError("Name and password field must be set")
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    def create_superuser(self, username, password, **extra_fields):
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
+
+        return self.create_user(username, password, **extra_fields), 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(max_length=100, primary_key=True)
-    password = models.CharField(max_length=150)
+    username = models.CharField(max_length=100, unique=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = "username"
+
+    objects = CustomUserManager()
 
     def joinedRoomNum(self):
         return len(self.room_set.all())
 
     def __str__(self):
-        return self.name      
+        return self.username      
 
 class Room(models.Model):
     name = models.CharField(max_length=100)

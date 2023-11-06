@@ -1,8 +1,8 @@
+import hashlib
 from django.views.generic import TemplateView, ListView
 from django.shortcuts import render, redirect
-import hashlib
 
-from .models import User, Room, Taikyoku3, Taikyoku4, Senseki3, Senseki4
+from .models import CustomUser, Room, Taikyoku3, Taikyoku4, Senseki3, Senseki4
 from .form import SignUpForm
 
 class Home(TemplateView):
@@ -12,11 +12,10 @@ def SignUp(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User(
-                name=form.cleaned_data['username'],
-                passwd=hashlib.sha256(form.cleaned_data['password1'].encode()).hexdigest(),
-            )
-            user.save()
+            CustomUser.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+                )
             return redirect('login')
     else:
         form = SignUpForm()
