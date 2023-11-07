@@ -22,8 +22,8 @@ def SignUp(request):
 
     return render(request, 'PunPals/signup.html', {'form': form})
 
-class Login(TemplateView):
-    template_name = "PunPals/login.html"
+#class Login(TemplateView):
+#    template_name = "PunPals/login.html"
 
-class UserHome(ListView):
+class UserHome(TemplateView):
     template_name = "PunPals/user_home.html"
