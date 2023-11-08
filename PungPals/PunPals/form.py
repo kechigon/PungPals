@@ -8,12 +8,12 @@ class SignUpForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get("username")
+        username = cleaned_data.get('username')
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('パスワードが一致しません')
         
-        if CustomUser.objects.get(username=username):
+        if CustomUser.objects.filter(username=username).exists():
             raise forms.ValidationError('既に存在するユーザー名です')

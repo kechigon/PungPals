@@ -1,6 +1,9 @@
-import hashlib
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView
+from django.shortcuts import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
 
 from .models import CustomUser, Room, Taikyoku3, Taikyoku4, Senseki3, Senseki4
 from .form import SignUpForm
@@ -22,8 +25,24 @@ def SignUp(request):
 
     return render(request, 'PunPals/signup.html', {'form': form})
 
-#class Login(TemplateView):
-#    template_name = "PunPals/login.html"
+class Login(LoginView):
+    redirect_authenticated_user=True,
+    template_name="PunPals/login.html"
 
-class UserHome(TemplateView):
+    def get_success_url(self):
+        url = reverse('user_home', args=[self.request.user.username]) 
+        return url
+
+class UserHome(TemplateView, LoginRequiredMixin):
     template_name = "PunPals/user_home.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.username != kwargs.get('username'):
+            return HttpResponseForbidden("このページを閲覧できません")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username')
+        context['username'] = username
+        return context
