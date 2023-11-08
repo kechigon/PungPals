@@ -3,5 +3,5 @@
 {% block title %}{{ username }}{% endblock %}
 
 {% block content %}
-test
+<button onclick="location.href='{% url 'logout' %}'">ログアウト</button>
 {% endblock %}

@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView
-from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView
-from django.shortcuts import reverse
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseForbidden
+from django.urls import reverse_lazy
 
 from .models import CustomUser, Room, Taikyoku3, Taikyoku4, Senseki3, Senseki4
 from .form import SignUpForm
@@ -32,6 +32,9 @@ class Login(LoginView):
     def get_success_url(self):
         url = reverse('user_home', args=[self.request.user.username]) 
         return url
+    
+class Logout(LogoutView):
+    next_page = reverse_lazy('home')
 
 class UserHome(TemplateView, LoginRequiredMixin):
     template_name = "PunPals/user_home.html"
