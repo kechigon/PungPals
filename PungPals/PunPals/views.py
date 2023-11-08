@@ -26,7 +26,6 @@ def SignUp(request):
     return render(request, 'PunPals/signup.html', {'form': form})
 
 class Login(LoginView):
-    redirect_authenticated_user=True,
     template_name="PunPals/login.html"
 
     def get_success_url(self):
@@ -41,7 +40,7 @@ class UserHome(TemplateView, LoginRequiredMixin):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.username != kwargs.get('username'):
-            return HttpResponseForbidden("このページを閲覧できません")
+            return redirect('login')
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -49,3 +48,6 @@ class UserHome(TemplateView, LoginRequiredMixin):
         username = self.kwargs.get('username')
         context['username'] = username
         return context
+    
+class CreateRoom(TemplateView, LoginRequiredMixin):
+    template_name = "PunPals/create_room.html"
