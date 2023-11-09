@@ -4,5 +4,6 @@
 
 {% block content %}
 <button onclick="location.href='{% url 'logout' %}'">ログアウト</button>
-<button onclick="location.href='{% url 'create_room' username %}'">部屋作成</button>
+<button onclick="location.href='{% url 'create_room' username %}'">部屋を作成</button>
+<button onclick="location.href='{% url 'join_room' username %}'">部屋に参加</button>
 {% endblock %}

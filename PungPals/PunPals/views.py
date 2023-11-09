@@ -54,15 +54,16 @@ class UserHome(UserDispatchMixin, TemplateView, LoginRequiredMixin):
         context['username'] = username
         return context
     
-class CreateRoom(UserDispatchMixin, CreateView, LoginRequiredMixin):
-    template_name = "PunPals/create_room.html"
-    model = Room
-    form_class = CreateRoomForm
-
+class FormKwargsMixin:
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+    
+class CreateRoom(UserDispatchMixin, FormKwargsMixin, CreateView, LoginRequiredMixin):
+    template_name = "PunPals/create_room.html"
+    model = Room
+    form_class = CreateRoomForm
 
     def form_valid(self, form):
         password = form.cleaned_data['passwd']
@@ -76,32 +77,30 @@ class CreateRoom(UserDispatchMixin, CreateView, LoginRequiredMixin):
 
         return HttpResponseRedirect(reverse('room_home', args=[self.request.user.username, instance.name]))
 
-class JoinRoom(UserDispatchMixin, View, LoginRequiredMixin):
+class JoinRoom(UserDispatchMixin, FormKwargsMixin, View, LoginRequiredMixin):
     template_name = "PunPals/join_room.html"
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
+    def get(self, request, *args, **kwargs):
+        form = JoinRoomForm(request=request)
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
-        if request.method == "POST":
-            form = JoinRoomForm(request.POST)
-            if form.is_valid():
-                room_name = form.cleaned_data.get('room_name')
-                password = form.cleaned_data.get('password')
-                room = Room.objects.filter(room_name=room_name, password=password).first()
-            
-                if room is None:
-                    form.add_error(None, '部屋名またはパスワードが違います')
-                else:
-                    room.users.add(self.request.user)
-                    room.save()
-        else:
-            form = JoinRoomForm()
+        form = JoinRoomForm(request.POST, request=request)
+        if form.is_valid():
+            roomname = form.cleaned_data.get('roomname')
+            password = form.cleaned_data.get('password')
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
- 
-        return HttpResponseRedirect(reverse('room_home', args=[self.request.user.username, instance.name]))
+            room = Room.objects.filter(name=roomname, passwd=hashed_password).first()
+
+            if room is None:
+                form.add_error(None, '部屋名またはパスワードが違います')
+            else:
+                room.users.add(request.user)
+                room.save()
+                return HttpResponseRedirect(reverse('room_home', args=[request.user.username, roomname]))
+            
+        return render(request, self.template_name, {'form': form})
 
 class RoomHome(UserDispatchMixin, TemplateView):
     template_name = "PunPals/room_home.html"

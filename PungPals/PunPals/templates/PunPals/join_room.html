@@ -3,5 +3,9 @@
 {% block title %}部屋参加{% endblock %}
 
 {% block content %}
-join_room
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">参加</button>
+</form>
 {% endblock %}
