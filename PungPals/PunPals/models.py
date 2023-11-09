@@ -26,19 +26,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    def joinedRoomNum(self):
-        return len(self.room_set.all())
-
     def __str__(self):
         return self.username      
 
 class Room(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     passwd = models.CharField(max_length=100)
     users = models.ManyToManyField(CustomUser)
-
-    def usersNum(self):
-        return len(self.users.all())
 
     def __str__(self):
         return self.name
