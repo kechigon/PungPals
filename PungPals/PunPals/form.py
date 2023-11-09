@@ -1,10 +1,6 @@
-from collections.abc import Mapping
-from typing import Any
 from django import forms
 from django.contrib.auth import get_user_model
-from django.core.files.base import File
-from django.db.models.base import Model
-from django.forms.utils import ErrorList
+
 
 from .models import CustomUser, Room
 
@@ -25,7 +21,7 @@ class SignUpForm(forms.Form):
         if CustomUser.objects.filter(username=username).exists():
             raise forms.ValidationError('既に存在するユーザー名です')
         
-class RoomForm(forms.ModelForm):
+class CreateRoomForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = ['name', 'passwd']
@@ -36,6 +32,7 @@ class RoomForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['maxlength'] = 100
         
     def clean(self):
         super().clean()
@@ -44,4 +41,19 @@ class RoomForm(forms.ModelForm):
 
         if user.room_set.count() >= 10:
             raise forms.ValidationError("所属できる部屋数の上限に達しています")
+        
+class JoinRoomForm(forms.Form):
+    roomname = forms.CharField(label='部屋名', max_length=100)
+    password = forms.CharField(label='パスワード')
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+
+        user = get_user_model().objects.get(username=self.request.user.username)
+
+        if user.room_set.count() >= 10:
+            raise forms.ValidationError("所属できる部屋数の上限に達しています")
