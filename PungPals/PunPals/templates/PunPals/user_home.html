@@ -4,7 +4,7 @@
 
 {% block content %}
 {% for room in user_rooms %}
-    <li>{{ room.name }}</li>
+    <li><a href = "{% url 'room_home' username=username roomname=room.name %}">{{ room.name }}</a></li>
         <form action="{% url 'delete_room' username=username pk=room.pk  %}" method="POST">
             {% csrf_token %}
             <input type="submit" value="削除" onclick="return confirm('削除すると他のユーザーも部屋にアクセスできなくなります。')">
