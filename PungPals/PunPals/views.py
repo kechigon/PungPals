@@ -1,8 +1,8 @@
 import hashlib
 
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView, CreateView
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.views.generic import TemplateView, CreateView, DeleteView
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -51,8 +51,21 @@ class UserHome(UserDispatchMixin, TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         username = self.kwargs.get('username')
+        user = CustomUser.objects.get(username=username)
         context['username'] = username
+        context['user_rooms'] = user.room_set.all()
         return context
+
+class DeleteRoom(UserDispatchMixin, DeleteView, LoginRequiredMixin):
+    model = Room
+
+    def get_success_url(self):
+        return reverse('user_home', args=[self.request.user.username])
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
     
 class FormKwargsMixin:
     def get_form_kwargs(self):
