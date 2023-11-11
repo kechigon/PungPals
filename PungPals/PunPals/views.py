@@ -1,7 +1,7 @@
 import hashlib
 
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView, CreateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -115,11 +115,22 @@ class JoinRoom(UserDispatchMixin, FormKwargsMixin, View, LoginRequiredMixin):
             
         return render(request, self.template_name, {'form': form})
 
-class RoomHome(UserDispatchMixin, TemplateView):
+class RoomHome(UserDispatchMixin, TemplateView, LoginRequiredMixin):
     template_name = "PunPals/room_home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username')
         roomname = self.kwargs.get('roomname')
+        context['username'] = username
         context['roomname'] = roomname
         return context
+    
+class RegisterResult(TemplateView):
+    template_name = "PunPals/register_result.html"
+
+class DeleteResult(TemplateView):
+    template_name = "PunPals/delete_result.html"
+
+class Ranking(TemplateView):
+    template_name = "PunPals/ranking.html"

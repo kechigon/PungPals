@@ -1,0 +1,8 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}ランキング{% endblock %}
+
+{% block content %}
+ranking
+<button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
+{% endblock %}

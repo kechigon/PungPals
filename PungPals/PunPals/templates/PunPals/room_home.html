@@ -4,4 +4,8 @@
 
 {% block content %}
 <h1>{{roomname}}</h1>
+<button onclick="location.href='{% url 'register_result' username=username roomname=roomname %}'">戦績を登録する</button>
+<button onclick="location.href='{% url 'delete_result' username=username roomname=roomname %}'">戦績を削除する</button>
+<button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'">ランキング</button>
+<button onclick="location.href='{% url 'user_home' username=username %}'">戻る</button>
 {% endblock %}

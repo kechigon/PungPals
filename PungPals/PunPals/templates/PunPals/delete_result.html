@@ -1,0 +1,8 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}戦績削除{% endblock %}
+
+{% block content %}
+delete_result
+<button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
+{% endblock %}

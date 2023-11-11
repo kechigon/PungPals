@@ -4,9 +4,9 @@
 
 {% block content %}
 <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">ログイン</button>
-    </form>
-    <button onclick="location.href='{% url 'signup' %}'">新規登録へ</button>
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">ログイン</button>
+</form>
+<button onclick="location.href='{% url 'signup' %}'">新規登録へ</button>
 {% endblock %}
