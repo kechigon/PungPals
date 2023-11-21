@@ -2,7 +2,7 @@ import hashlib
 
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -122,6 +122,8 @@ class RoomHome(UserDispatchMixin, TemplateView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         username = self.kwargs.get('username')
         roomname = self.kwargs.get('roomname')
+        room = get_object_or_404(Room, name=roomname)
+        context['room_users'] = room.users.all()
         context['username'] = username
         context['roomname'] = roomname
         return context

@@ -4,8 +4,22 @@
 
 {% block content %}
 <h1>{{roomname}}</h1>
-<button onclick="location.href='{% url 'register_result' username=username roomname=roomname %}'">戦績を登録する</button>
+{% for user in room_users %}
+    <li>{{ user.username }}</li>
+{% endfor %}
+<button id="registerButton">戦績を登録する</button>
 <button onclick="location.href='{% url 'delete_result' username=username roomname=roomname %}'">戦績を削除する</button>
 <button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'">ランキング</button>
 <button onclick="location.href='{% url 'user_home' username=username %}'">戻る</button>
+
+<script>
+document.getElementById('registerButton').addEventListener('click', function() {
+    var userCount = {{ room_users|length }};
+    if (userCount < 3) {
+        alert('ユーザー数が三人未満です');
+    } else {
+        location.href = '{% url 'register_result' username=username roomname=roomname %}';
+    }
+});
+</script>
 {% endblock %}
