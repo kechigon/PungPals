@@ -1,0 +1,62 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}{{ roomname }}{% endblock %}
+
+{% block content %}
+<h1>{{roomname}}</h1>
+<h2>この部屋のユーザー</h2>
+{% for user in room_users %}
+    <li>{{ user.username }}</li>
+{% endfor %}
+{% if senseki3 %}
+    <h3>{{username}}の三麻の戦績</h3>
+    <ul>
+        <li>平均順位: {{ senseki3.rankMean }}</li>
+        <li>一位率: {{ senseki3.firstRate }}%</li>
+        <li>二位率: {{ senseki3.secondRate }}%</li>
+        <li>三位率: {{ senseki3.thirdRate }}%</li>
+        <li>とび率: {{ senseki3.outRate }}%</li>
+        <li>対局数: {{ senseki3.gameNum }}</li>
+        <li>平均得点: {{ senseki3.scoreMean }}</li>
+    </ul>
+{% endif %}
+{% if senseki4 %}
+    <h3>{{username}}の四麻の戦績</h3>
+    <ul>
+        <li>平均順位: {{ senseki4.rankMean }}</li>
+        <li>一位率: {{ senseki4.firstRate }}%</li>
+        <li>二位率: {{ senseki4.secondRate }}%</li>
+        <li>三位率: {{ senseki4.thirdRate }}%</li>
+        <li>四位率: {{ senseki4.fourthRate }}%</li>
+        <li>とび率: {{ senseki4.outRate }}%</li>
+        <li>対局数: {{ senseki4.gameNum }}</li>
+        <li>平均得点: {{ senseki4.scoreMean }}</li>
+    </ul>
+{% endif %}
+
+<button id="registerButton3">三麻の対局結果を登録</button>
+<button onclick="location.href='{% url 'delete_result3' username=username roomname=roomname %}'">三麻の対局結果を削除</button>
+<button id="registerButton4">四麻の対局結果を登録</button>
+<button onclick="location.href='{% url 'delete_result4' username=username roomname=roomname %}'">四麻の対局結果を削除</button>
+<button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'">ランキング</button>
+<button onclick="location.href='{% url 'user_home' username=username %}'">戻る</button>
+
+<script>
+document.getElementById('registerButton3').addEventListener('click', function() {
+    var userCount = {{ room_users|length }};
+    if (userCount < 3) {
+        alert('ユーザー数が三人未満です');
+    } else {
+        location.href = '{% url 'register_result3' username=username roomname=roomname %}';
+    }
+});
+document.getElementById('registerButton4').addEventListener('click', function() {
+    var userCount = {{ room_users|length }};
+    if (userCount < 4) {
+        alert('ユーザー数が四人未満です');
+    } else {
+        location.href = '{% url 'register_result4' username=username roomname=roomname %}';
+    }
+});
+</script>
+{% endblock %}

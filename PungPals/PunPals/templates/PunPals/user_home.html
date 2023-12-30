@@ -1,0 +1,18 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}{{ username }}{% endblock %}
+
+{% block content %}
+{% for room in user_rooms %}
+    <li><a href = "{% url 'room_home' username=username roomname=room.name %}">{{ room.name }}</a></li>
+        <form action="{% url 'delete_room' username=username pk=room.pk  %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="削除" onclick="return confirm('削除すると他のユーザーも部屋にアクセスできなくなります。')">
+        </form>
+{% empty %}
+    <li>参加している部屋はありません。</li>
+{% endfor %}
+<button onclick="location.href='{% url 'logout' %}'">ログアウト</button>
+<button onclick="location.href='{% url 'create_room' username %}'">部屋を作成</button>
+<button onclick="location.href='{% url 'join_room' username %}'">部屋に参加</button>
+{% endblock %}

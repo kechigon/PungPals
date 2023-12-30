@@ -1,0 +1,15 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}sign up{% endblock %}
+
+{% block content %}
+<h2>新規登録</h2>
+<p>ユーザー名・パスワードは変更できません！！</p>
+<p>安全に保管してください</p> 
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">送信</button>
+</form>
+<button onclick="location.href='{% url 'login' %}'">ログインへ</button>
+{% endblock %}

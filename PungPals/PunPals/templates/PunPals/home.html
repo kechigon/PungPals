@@ -1,0 +1,18 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">PungPals</h1>
+    <div class="col-lg-6 mx-auto"></div>
+        <p class="mb-4">あなたの麻雀戦績をのこしませんか？<br>
+            対局結果を記録することで成長を実感し、戦術の研鑽を積みましょう！
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='{% url 'login' %}'">ログイン</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4" onclick="location.href='{% url 'signup' %}'">新規登録</button>
+          </div>
+    </div>
+</div>
+{% endblock %}

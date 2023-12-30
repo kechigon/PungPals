@@ -1,0 +1,11 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}部屋参加{% endblock %}
+
+{% block content %}
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">参加</button>
+</form>
+{% endblock %}
