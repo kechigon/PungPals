@@ -3,6 +3,60 @@
 {% block title %}ランキング{% endblock %}
 
 {% block content %}
-ranking
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="検索">
+</form>
+
+{% if senseki_list %}
+  {% if sort_by == "rankMean" %}
+  <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.rankMean }}</li>
+    {% endfor %}
+  </ol>
+  {% elif sort_by == "firstRate" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.firstRate }}</li>
+    {% endfor %}
+  </ol>
+  {% elif sort_by == "secondRate" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.secondRate }}</li>
+    {% endfor %}
+  </ol>
+  {% elif sort_by == "thirdRate" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.thirdRate }}</li>
+    {% endfor %}
+  </ol>
+  {% elif sort_by == "fourthRate" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.fourthRate }}</li>
+    {% endfor %}
+  {% elif sort_by == "outRate" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.outMean }}</li>
+    {% endfor %}
+  {% elif sort_by == "gameNum" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.gameNum }}</li>
+    {% endfor %}
+  {% elif sort_by == "scoreMean" %}
+    <ol>
+    {% for record in senseki_list %}
+      <li>{{ record.user.username }} - {{ record.scoreMean }}</li>
+    {% endfor %}
+  {% endif %}
+{% else %}
+  <p>該当者がいません。</p>
+{% endif %}
 <button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
 {% endblock %}

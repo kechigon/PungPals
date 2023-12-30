@@ -45,6 +45,7 @@ class Taikyoku3(models.Model):
     tonScore = models.IntegerField()
     nanScore = models.IntegerField()
     syaScore = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def ranking(self):
         score_list =  [(self.userTon, self.tonScore, 3),
@@ -52,7 +53,7 @@ class Taikyoku3(models.Model):
                        (self.userSya, self.syaScore, 1)]
         # sort by score and then by user rank in descending order
         score_list.sort(key = lambda x: (x[1], x[2]), reverse=True)
-        return [(user.name, score) for user, score, _ in score_list]
+        return [(user.username, score) for user, score, _ in score_list]
 
 class Taikyoku4(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -64,6 +65,7 @@ class Taikyoku4(models.Model):
     nanScore = models.IntegerField()
     syaScore = models.IntegerField()
     peScore = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def ranking(self):
         score_list =  [(self.userTon, self.tonScore, 4),
@@ -72,7 +74,7 @@ class Taikyoku4(models.Model):
                        (self.userPe, self.peScore, 1)]
         # sort by score and then by user rank in descending order
         score_list.sort(key = lambda x: (x[1], x[2]), reverse=True)
-        return [(user.name, score) for user, score, _ in score_list]
+        return [(user.username, score) for user, score, _ in score_list]
 
 class Senseki3(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
@@ -82,28 +84,28 @@ class Senseki3(models.Model):
     secondNum = models.IntegerField(default=0)
     thirdNum = models.IntegerField(default=0)
     outNum = models.IntegerField(default=0)
-    firstRate = models.FloatField()
-    secondRate = models.FloatField()
-    thirdRate = models.FloatField()
-    outRate = models.FloatField()
-    gameNum = models.IntegerField()
-    scoreSum = models.BigIntegerField()
-    scoreMean = models.FloatField()
+    firstRate = models.FloatField(default=0)
+    secondRate = models.FloatField(default=0)
+    thirdRate = models.FloatField(default=0)
+    outRate = models.FloatField(default=0)
+    gameNum = models.IntegerField(default=0)
+    scoreSum = models.BigIntegerField(default=0)
+    scoreMean = models.FloatField(default=0)
 
 class Senseki4(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    rankMean = models.FloatField()
+    rankMean = models.FloatField(default=0)
     firstNum = models.IntegerField(default=0)
     secondNum = models.IntegerField(default=0)
     thirdNum = models.IntegerField(default=0)
     fourthNum = models.IntegerField(default=0)
     outNum = models.IntegerField(default=0)
-    firstRate = models.FloatField()
-    secondRate = models.FloatField()
-    thirdRate = models.FloatField()
-    fourthRate = models.FloatField()
-    outRate = models.FloatField()
-    gameNum = models.IntegerField()
-    scoreSum = models.BigIntegerField()
-    scoreMean = models.FloatField()
+    firstRate = models.FloatField(default=0)
+    secondRate = models.FloatField(default=0)
+    thirdRate = models.FloatField(default=0)
+    fourthRate = models.FloatField(default=0)
+    outRate = models.FloatField(default=0)
+    gameNum = models.IntegerField(default=0)
+    scoreSum = models.BigIntegerField(default=0)
+    scoreMean = models.FloatField(default=0)

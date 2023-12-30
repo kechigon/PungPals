@@ -1,0 +1,40 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}戦績登録{% endblock %}
+
+{% block content %}
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="登録">
+</form>
+<button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            const tonScore = parseInt(document.getElementById('id_tonScore').value, 10);
+            const nanScore = parseInt(document.getElementById('id_nanScore').value, 10);
+            const syaScore = parseInt(document.getElementById('id_syaScore').value, 10);
+            const PeScore = parseInt(document.getElementById('id_peScore').value, 10);
+            const userTon = document.getElementById('id_userTon').value;
+            const userNan = document.getElementById('id_userNan').value;
+            const userSya = document.getElementById('id_userSya').value;
+            const userPe = document.getElementById('id_userPe').value;
+
+            // If the total score is not 100,000 points
+            if (tonScore + nanScore + syaScore + PeScore !== 100000) {
+                alert('点数入力に間違いがあります');
+                event.preventDefault();
+            }
+
+            // If the same user is selected more than once
+            if (userTon === userNan || userTon === userSya || userTon === userPe || userNan === userSya || userNan === userPe || userSya === userPe) {
+                alert('ユーザーが正しく選択されていません');
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}

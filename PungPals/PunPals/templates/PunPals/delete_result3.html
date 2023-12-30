@@ -1,0 +1,23 @@
+{% extends "PunPals/base.html" %}
+
+{% block title %}三麻対局結果削除{% endblock %}
+
+{% block content %}
+  <h2>対局結果一覧</h2>
+  {% if taikyoku3_list %}
+    <ul>
+      {% for taikyoku3 in taikyoku3_list %}
+        <li>
+          {{ taikyoku3.created_at }} - 
+          <form action="{% url 'delete_taikyoku3' username=username roomname=roomname pk=taikyoku3.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">削除</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>対局結果がありません</p>
+  {% endif %}
+  <button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
+{% endblock %}
