@@ -240,7 +240,7 @@ class RegisterResult4(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, 
             if score < 0:
                 senseki4.outNum += 1
 
-            senseki4.rankMean = (1 * senseki4.firstNum + 2 * senseki4.secondNum + 3 * senseki4.thirdNum + senseki4.fourthNum) / float(senseki4.gameNum)
+            senseki4.rankMean = (1 * senseki4.firstNum + 2 * senseki4.secondNum + 3 * senseki4.thirdNum + 4 * senseki4.fourthNum) / float(senseki4.gameNum)
             senseki4.firstRate = senseki4.firstNum / float(senseki4.gameNum)
             senseki4.secondRate = senseki4.secondNum / float(senseki4.gameNum)
             senseki4.thirdRate = senseki4.thirdNum / float(senseki4.gameNum)
