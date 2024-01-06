@@ -42,6 +42,12 @@ class CreateRoomForm(RoomCountCleanMixin, forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['maxlength'] = 100
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if Room.objects.filter(name=name).exists():
+            raise forms.ValidationError("既に存在する部屋名です")
+        return name
         
 class JoinRoomForm(RoomCountCleanMixin, forms.Form):
     roomname = forms.CharField(label='部屋名', max_length=100)

@@ -80,8 +80,7 @@ class CreateRoom(UserDispatchMixin, FormKwargsMixin, LoginRequiredMixin, CreateV
 
     def form_valid(self, form):
         password = form.cleaned_data['passwd']
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        form.instance.passwd = hashed_password
+        form.instance.passwd = password
 
         instance = form.save()
 
@@ -143,6 +142,7 @@ class RoomHome(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, Templat
         context['room_users'] = room.users.all()
         context['username'] = username
         context['roomname'] = roomname
+        context["room_passwd"] = room.passwd
         context['senseki3'] = senseki3
         context['senseki4'] = senseki4
         return context

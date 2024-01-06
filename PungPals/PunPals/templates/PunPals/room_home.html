@@ -4,6 +4,8 @@
 
 {% block content %}
 <h1>{{roomname}}</h1>
+<h2>パスワード</h2>
+{{room_passwd}}
 <h2>この部屋のユーザー</h2>
 {% for user in room_users %}
     <li>{{ user.username }}</li>
