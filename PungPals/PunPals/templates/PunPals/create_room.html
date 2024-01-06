@@ -3,11 +3,18 @@
 {% block title %}部屋作成{% endblock %}
 
 {% block content %}
-<p>部屋名・パスワードは変更できません！！</p>
-<p>安全に保管してください</p> 
-<form  method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">作成</button>
-</form>
+{% load crispy_forms_tags %}
+<div class="container px-4 py-5 my-5 text-center">
+    <h2 class="display-5 fw-bold">部屋作成</h2>
+    <p class="lead">部屋名・パスワードは変更できません！！安全に保管してください。</p>
+    <div class="col-lg-6 mx-auto">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">作成</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
