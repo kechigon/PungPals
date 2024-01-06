@@ -102,7 +102,6 @@ class Taikyoku4Form(forms.ModelForm):
         self.fields['userPe'].label = '北'
         self.fields['peScore'].label = '北の得点'
 
-# 選択肢のタプルを定義します。
 GAME_CHOICES = [
     ('senseki3', '三麻'),
     ('senseki4', '四麻'),
