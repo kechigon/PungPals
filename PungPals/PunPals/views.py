@@ -101,9 +101,8 @@ class JoinRoom(UserDispatchMixin, FormKwargsMixin, LoginRequiredMixin, View):
         if form.is_valid():
             roomname = form.cleaned_data.get('roomname')
             password = form.cleaned_data.get('password')
-            hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
-            room = Room.objects.filter(name=roomname, passwd=hashed_password).first()
+            room = Room.objects.filter(name=roomname, passwd=password).first()
 
             if room is None:
                 form.add_error(None, '部屋名またはパスワードが違います')

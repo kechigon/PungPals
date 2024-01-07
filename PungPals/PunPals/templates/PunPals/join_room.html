@@ -3,9 +3,17 @@
 {% block title %}部屋参加{% endblock %}
 
 {% block content %}
-<form  method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">参加</button>
-</form>
+{% load crispy_forms_tags %}
+<div class="container px-4 py-5 my-5 text-center">
+    <h2 class="display-5 fw-bold">部屋参加</h2>
+    <div class="col-lg-6 mx-auto">
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">参加</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

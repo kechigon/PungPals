@@ -3,21 +3,27 @@
 {% block title %}三麻対局結果削除{% endblock %}
 
 {% block content %}
-  <h2>対局結果一覧</h2>
-  {% if taikyoku3_list %}
-    <ul>
-      {% for taikyoku3 in taikyoku3_list %}
-        <li>
-          {{ taikyoku3.created_at }} - 
-          <form action="{% url 'delete_taikyoku3' username=username roomname=roomname pk=taikyoku3.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit">削除</button>
-          </form>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>対局結果がありません</p>
-  {% endif %}
-  <button onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>
+<div class="container px-4 py-5 my-5">
+  <h2 class="display-5 fw-bold text-center">削除する対局を選んでください</h2>
+  <div class="col-lg-6 mx-auto">
+    {% if taikyoku3_list %}
+      <ul class="list-group">
+        {% for taikyoku3 in taikyoku3_list %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ taikyoku3.created_at }}
+            <form action="{% url 'delete_taikyoku3' username=username roomname=roomname pk=taikyoku3.pk %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">削除</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>対局結果がありません</p>
+    {% endif %}
+    <div class="d-grid gap-2 mt-3">
+      <button class="btn btn-secondary btn-lg" onclick="location.href='{% url 'room_home' username=username roomname=roomname %}'">戻る</button>  <!-- Reusing button style from register_result3.html -->
+    </div>
+  </div>
+</div>
 {% endblock %}

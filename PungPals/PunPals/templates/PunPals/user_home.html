@@ -3,16 +3,29 @@
 {% block title %}{{ username }}{% endblock %}
 
 {% block content %}
-{% for room in user_rooms %}
-    <li><a href = "{% url 'room_home' username=username roomname=room.name %}">{{ room.name }}</a></li>
-        <form action="{% url 'delete_room' username=username pk=room.pk  %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="削除" onclick="return confirm('削除すると他のユーザーも部屋にアクセスできなくなります。')">
-        </form>
-{% empty %}
-    <li>参加している部屋はありません。</li>
-{% endfor %}
-<button onclick="location.href='{% url 'logout' %}'">ログアウト</button>
-<button onclick="location.href='{% url 'create_room' username %}'">部屋を作成</button>
-<button onclick="location.href='{% url 'join_room' username %}'">部屋に参加</button>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>{{ username }}の参加している部屋</h2>
+            <ul class="list-group mb-3">
+                {% for room in user_rooms %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'room_home' username=username roomname=room.name %}">{{ room.name }}</a>
+                    <form action="{% url 'delete_room' username=username pk=room.pk  %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="削除" class="btn btn-danger btn-sm" onclick="return confirm('削除すると他のユーザーも部屋にアクセスできなくなります。')">
+                    </form>
+                </li>
+                {% empty %}
+                <li class="list-group-item">参加している部屋はありません。</li>
+                {% endfor %}
+            </ul>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button onclick="location.href='{% url 'logout' %}'" class="btn btn-secondary me-md-2">ログアウト</button>
+                <button onclick="location.href='{% url 'create_room' username %}'" class="btn btn-primary me-md-2">部屋を作成</button>
+                <button onclick="location.href='{% url 'join_room' username %}'" class="btn btn-primary">部屋に参加</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
