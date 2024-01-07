@@ -50,13 +50,12 @@
                 </div>
             {% endif %}
 
-            <!-- 操作ボタン -->
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button id="registerButton3" class="btn btn-primary me-md-2">三麻登録</button>
                 <button onclick="location.href='{% url 'delete_result3' username=username roomname=roomname %}'" class="btn btn-danger me-md-2">三麻削除</button>
                 <button id="registerButton4" class="btn btn-primary me-md-2">四麻登録</button>
                 <button onclick="location.href='{% url 'delete_result4' username=username roomname=roomname %}'" class="btn btn-danger me-md-2">四麻削除</button>
-                <button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'" class="btn btn-secondary me-md-2">ランキング</button>
+                <button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'" class="btn btn-primary me-md-2">ランキング</button>
                 <button onclick="location.href='{% url 'user_home' username=username %}'" class="btn btn-secondary">戻る</button>
             </div>
         </div>
