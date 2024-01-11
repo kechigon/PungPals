@@ -17,37 +17,37 @@
         {% if sort_by == "rankMean" %}
         <ol class="list-group">
           {% for record in senseki_list %}
-            <li class="list-group-item">{{ record.user.username }} - {{ record.rankMean }}</li>
+            <li class="list-group-item">{{ record.user.username }} - {{ record.rankMean|floatformat:2 }}</li>
           {% endfor %}
         </ol>
         {% elif sort_by == "firstRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.firstRate }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.firstRate|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "secondRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.secondRate }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.secondRate|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "thirdRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.thirdRate }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.thirdRate|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "fourthRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.fourthRate }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.fourthRate|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "outRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.outRate }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.outRate|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "gameNum" %}
@@ -59,7 +59,7 @@
         {% elif sort_by == "scoreMean" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.scoreMean }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.scoreMean|floatformat:2 }}</li>
             {% endfor %}
           </ol>
         {% endif %}

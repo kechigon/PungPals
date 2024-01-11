@@ -21,13 +21,13 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ username }}の三麻の戦績</h3>
                         <ul class="list-unstyled">
-                            <li>平均順位: {{ senseki3.rankMean }}</li>
-                            <li>一位率: {{ senseki3.firstRate }}%</li>
-                            <li>二位率: {{ senseki3.secondRate }}%</li>
-                            <li>三位率: {{ senseki3.thirdRate }}%</li>
-                            <li>とび率: {{ senseki3.outRate }}%</li>
+                            <li>平均順位: {{ senseki3.rankMean|floatformat:2 }}</li>
+                            <li>一位率: {{ senseki3.firstRate|floatformat:2 }}%</li>
+                            <li>二位率: {{ senseki3.secondRate|floatformat:2 }}%</li>
+                            <li>三位率: {{ senseki3.thirdRate|floatformat:2 }}%</li>
+                            <li>とび率: {{ senseki3.outRate|floatformat:2 }}%</li>
                             <li>対局数: {{ senseki3.gameNum }}</li>
-                            <li>平均得点: {{ senseki3.scoreMean }}</li>
+                            <li>平均得点: {{ senseki3.scoreMean|floatformat:2 }}</li>
                         </ul>
                     </div>
                 </div>
@@ -37,14 +37,14 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ username }}の四麻の戦績</h3>
                         <ul class="list-unstyled">
-                            <li>平均順位: {{ senseki4.rankMean }}</li>
-                            <li>一位率: {{ senseki4.firstRate }}%</li>
-                            <li>二位率: {{ senseki4.secondRate }}%</li>
-                            <li>三位率: {{ senseki4.thirdRate }}%</li>
-                            <li>四位率: {{ senseki4.fourthRate }}%</li>
-                            <li>とび率: {{ senseki4.outRate }}%</li>
+                            <li>平均順位: {{ senseki4.rankMean|floatformat:2 }}</li>
+                            <li>一位率: {{ senseki4.firstRate|floatformat:2 }}%</li>
+                            <li>二位率: {{ senseki4.secondRate|floatformat:2 }}%</li>
+                            <li>三位率: {{ senseki4.thirdRate|floatformat:2 }}%</li>
+                            <li>四位率: {{ senseki4.fourthRate|floatformat:2 }}%</li>
+                            <li>とび率: {{ senseki4.outRate|floatformat:2 }}%</li>
                             <li>対局数: {{ senseki4.gameNum }}</li>
-                            <li>平均得点: {{ senseki4.scoreMean }}</li>
+                            <li>平均得点: {{ senseki4.scoreMean|floatformat:2 }}</li>
                         </ul>
                     </div>
                 </div>
