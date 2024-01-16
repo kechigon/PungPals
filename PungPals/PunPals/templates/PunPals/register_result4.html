@@ -4,8 +4,9 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
-<div class="container px-4 py-5 my-5">
-    <h2 class="display-5 fw-bold text-center">戦績登録</h2>
+<div class="container px-4 py-5 my-5 text-center">
+<i class="bi bi-pencil-square" style="font-size: 3rem;"></i>
+    <h2 class="display-5 fw-bold">戦績登録</h2>
     <div class="col-lg-6 mx-auto">
         <form method="post" class="needs-validation" novalidate>
             {% csrf_token %}

@@ -421,7 +421,6 @@ class Ranking(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, View):
             game_type = form.cleaned_data['game_type']
             game_num = form.cleaned_data['game_num']
             sort_by = form.cleaned_data['sort_by']
-            print(sort_by)
 
             room = get_object_or_404(Room, name=kwargs['roomname'])
 

@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <h1>{{ roomname }}</h1>
-            <h3>パスワード</h3>
-            <p>{{ room_passwd }}</p>
+            <h4 class="mb-2">パスワード</h4>
+            <p class="bg-light p-2 border rounded">{{ room_passwd }}</p>
             <h2>この部屋のユーザー</h2>
             <ul class="list-group mb-3">
                 {% for user in room_users %}
@@ -18,45 +18,59 @@
 
             {% if senseki3 %}
                 <div class="card mb-3">
+                    <h3 class="card-title">{{ username }}の三麻の戦績</h3>
                     <div class="card-body">
-                        <h3 class="card-title">{{ username }}の三麻の戦績</h3>
-                        <ul class="list-unstyled">
-                            <li>平均順位: {{ senseki3.rankMean|floatformat:2 }}</li>
-                            <li>一位率: {{ senseki3.firstRate|floatformat:2 }}%</li>
-                            <li>二位率: {{ senseki3.secondRate|floatformat:2 }}%</li>
-                            <li>三位率: {{ senseki3.thirdRate|floatformat:2 }}%</li>
-                            <li>とび率: {{ senseki3.outRate|floatformat:2 }}%</li>
-                            <li>対局数: {{ senseki3.gameNum }}</li>
-                            <li>平均得点: {{ senseki3.scoreMean|floatformat:2 }}</li>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">平均順位: {{ senseki3.rankMean }}</li>
+                            <li class="list-group-item">一位率: {{ senseki3.firstRate }}%</li>
+                            <li class="list-group-item">二位率: {{ senseki3.secondRate }}%</li>
+                            <li class="list-group-item">三位率: {{ senseki3.thirdRate }}%</li>
+                            <li class="list-group-item">とび率: {{ senseki3.outRate }}%</li>
+                            <li class="list-group-item">対局数: {{ senseki3.gameNum }}</li>
+                            <li class="list-group-item">平均得点: {{ senseki3.scoreMean }}</li>
                         </ul>
                     </div>
                 </div>
             {% endif %}
             {% if senseki4 %}
                 <div class="card mb-3">
+                    <h3 class="card-title">{{ username }}の四麻の戦績</h3>
                     <div class="card-body">
-                        <h3 class="card-title">{{ username }}の四麻の戦績</h3>
-                        <ul class="list-unstyled">
-                            <li>平均順位: {{ senseki4.rankMean|floatformat:2 }}</li>
-                            <li>一位率: {{ senseki4.firstRate|floatformat:2 }}%</li>
-                            <li>二位率: {{ senseki4.secondRate|floatformat:2 }}%</li>
-                            <li>三位率: {{ senseki4.thirdRate|floatformat:2 }}%</li>
-                            <li>四位率: {{ senseki4.fourthRate|floatformat:2 }}%</li>
-                            <li>とび率: {{ senseki4.outRate|floatformat:2 }}%</li>
-                            <li>対局数: {{ senseki4.gameNum }}</li>
-                            <li>平均得点: {{ senseki4.scoreMean|floatformat:2 }}</li>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">平均順位: {{ senseki4.rankMean }}</li>
+                            <li class="list-group-item">一位率: {{ senseki4.firstRate }}%</li>
+                            <li class="list-group-item">二位率: {{ senseki4.secondRate }}%</li>
+                            <li class="list-group-item">三位率: {{ senseki4.thirdRate }}%</li>
+                            <li class="list-group-item">四位率: {{ senseki4.fourthRate }}%</li>
+                            <li class="list-group-item">とび率: {{ senseki4.outRate }}%</li>
+                            <li class="list-group-item">対局数: {{ senseki4.gameNum }}</li>
+                            <li class="list-group-item">平均得点: {{ senseki4.scoreMean }}</li>
                         </ul>
                     </div>
                 </div>
             {% endif %}
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button id="registerButton3" class="btn btn-primary me-md-2">三麻登録</button>
-                <button onclick="location.href='{% url 'delete_result3' username=username roomname=roomname %}'" class="btn btn-danger me-md-2">三麻削除</button>
-                <button id="registerButton4" class="btn btn-primary me-md-2">四麻登録</button>
-                <button onclick="location.href='{% url 'delete_result4' username=username roomname=roomname %}'" class="btn btn-danger me-md-2">四麻削除</button>
-                <button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'" class="btn btn-primary me-md-2">ランキング</button>
-                <button onclick="location.href='{% url 'user_home' username=username %}'" class="btn btn-secondary">戻る</button>
+            <div class="button-container">
+                <div class="btn-group mt-2 gap-2" role="group" >
+                    <button id="registerButton3" class="btn btn-primary mahjong-btn">三麻の対局結果を登録</button>
+                    <button onclick="location.href='{% url 'delete_result3' username=username roomname=roomname %}'"
+                        class="btn btn-danger mahjong-btn">三麻の対局結果を削除</button>
+
+                </div>
+                <div class="mt-2">
+                    <div class="btn-group mt-2 gap-2" role="group" >
+
+                        <button id="registerButton4" class="btn btn-primary mahjong-btn">四麻の対局結果を登録</button>
+                        <button onclick="location.href='{% url 'delete_result4' username=username roomname=roomname %}'"
+                            class="btn btn-danger mahjong-btn">四麻の対局結果を削除</button>
+                    </div>
+                </div>
+                    <div class="mt-4">
+                        <button onclick="location.href='{% url 'user_home' username=username %}'"
+                            class="btn btn-secondary mahjong-btn">戻る</button>
+                        <button onclick="location.href='{% url 'ranking' username=username roomname=roomname %}'"
+                            class="btn btn-info mahjong-btn">ランキング</button>
+                    </div>
             </div>
         </div>
     </div>

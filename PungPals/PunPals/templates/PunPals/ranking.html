@@ -23,31 +23,31 @@
         {% elif sort_by == "firstRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.firstRate|floatformat:2 }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.firstRate|floatformat:2 }}%</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "secondRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.secondRate|floatformat:2 }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.secondRate|floatformat:2 }}%</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "thirdRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.thirdRate|floatformat:2 }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.thirdRate|floatformat:2 }}%</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "fourthRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.fourthRate|floatformat:2 }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.fourthRate|floatformat:2 }}%</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "outRate" %}
           <ol class="list-group">
             {% for record in senseki_list %}
-             <li class="list-group-item">{{ record.user.username }} - {{ record.outRate|floatformat:2 }}</li>
+             <li class="list-group-item">{{ record.user.username }} - {{ record.outRate|floatformat:2 }}%</li>
             {% endfor %}
           </ol>
         {% elif sort_by == "gameNum" %}
@@ -73,4 +73,36 @@
     </div>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  function updateSortByChoices() {
+    var gameType = $('#id_game_type').val();
+    var sortBySelect = $('#id_sort_by');
+    if (gameType == 'senseki3') {
+      sortBySelect.find('option[value="fourthRate"]').remove();
+    } else {
+      sortBySelect.empty();
+      var options = [
+        ['rankMean', '平均順位'],
+        ['firstRate', '一着率'],
+        ['secondRate', '二着率'],
+        ['thirdRate', '三着率'],
+        ['fourthRate', '四着率'],
+        ['outRate', '飛び率'],
+        ['gameNum', '局数'],
+        ['scoreMean', '平均スコア'],
+      ];
+      options.forEach(function(opt) {
+        sortBySelect.append(new Option(opt[1], opt[0]));
+      });
+    }
+  }
+
+  $('#id_game_type').change(updateSortByChoices);
+
+  updateSortByChoices();
+});
+</script>
 {% endblock %}
