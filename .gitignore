@@ -2,3 +2,7 @@ __pycache__
 *.sqlite3
 migrations/
 local_settings.py
+
+.terraform
+key.json
+terraform.tfvars
