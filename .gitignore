@@ -6,3 +6,4 @@ local_settings.py
 .terraform
 key.json
 terraform.tfvars
+terraform.tfstate*
