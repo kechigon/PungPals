@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -135,3 +135,13 @@ LOGIN_URL = "login"
 #LOGIN_REDIRECT_URL = "user_home"
 
 AUTH_USER_MODEL = "PunPals.CustomUser"
+
+# https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+##STORAGES = {
+##    "default": {
+##        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+##        "OPTIONS": {
+##          ...your_options_here
+##        },
+##    },
+##}
