@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # [START cloudrun_django_secret_config]
 # SECURITY WARNING: don't run with debug turned on in production!
 # Change this to "False" when you are ready for production
-env = environ.Env(DEBUG=(bool, True))
+env = environ.Env(DEBUG=(bool, False))
 env_file = os.path.join(BASE_DIR, ".env")
 
 # Attempt to load the Project ID into the environment, safely failing on error.

@@ -1,7 +1,7 @@
 //Use gcloud command since it cannot be changed in the editor role.
 
 /*data "local_file" "env_file" {
-  filename = "${path.module}/.env"
+  filename = "${path.module}/././.env"
 }
 
 resource "google_secret_manager_secret" "django_settings" {
