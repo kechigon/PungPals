@@ -11,25 +11,66 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import io
+from urllib.parse import urlparse
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+import environ
+import google.auth
+from google.cloud import secretmanager
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# [START cloudrun_django_secret_config]
+# SECURITY WARNING: don't run with debug turned on in production!
+# Change this to "False" when you are ready for production
+env = environ.Env(DEBUG=(bool, True))
+env_file = os.path.join(BASE_DIR, ".env")
+
+# Attempt to load the Project ID into the environment, safely failing on error.
+try:
+    _, os.environ["GOOGLE_CLOUD_PROJECT"] = google.auth.default()
+except google.auth.exceptions.DefaultCredentialsError:
+    pass
+
+if os.path.isfile(env_file):
+    # Use a local secret file, if provided
+    env.read_env(env_file)
+elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
+    # Pull secrets from Secret Manager
+    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+
+    client = secretmanager.SecretManagerServiceClient()
+    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
+    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
+
+    env.read_env(io.StringIO(payload))
+else:
+    raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
+# [END cloudrun_django_secret_config]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-# Todo: change
-ALLOWED_HOSTS = ['*']
-
+# [START cloudrun_django_csrf]
+# SECURITY WARNING: It's recommended that you use this when
+# running in production. The URL will be known once you first deploy
+# to Cloud Run. This code takes the URL and converts it to both these settings formats.
+CLOUDRUN_SERVICE_URL = env("CLOUDRUN_SERVICE_URL", default=None)
+if CLOUDRUN_SERVICE_URL:
+    ALLOWED_HOSTS = [urlparse(CLOUDRUN_SERVICE_URL).netloc]
+    CSRF_TRUSTED_ORIGINS = [CLOUDRUN_SERVICE_URL]
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+else:
+    ALLOWED_HOSTS = ["*"]
+# [END cloudrun_django_csrf]
 
 # Application definition
 
@@ -82,13 +123,15 @@ WSGI_APPLICATION = 'PungPals.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# [START cloudrun_django_database_config]
+# Use django-environ to parse the connection string
+DATABASES = {"default": env.db()}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# If the flag as been set, configure to use proxy
+if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+    DATABASES["default"]["HOST"] = "127.0.0.1"
+    DATABASES["default"]["PORT"] = 5432
+# [END cloudrun_django_database_config
 
 
 # Password validation
@@ -124,8 +167,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
+# [START cloudrun_django_static_config]
+# Define static storage via django-storages[google]
+GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+STATIC_URL = "/static/"
+DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+GS_DEFAULT_ACL = "publicRead"
+# [END cloudrun_django_static_config]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -136,5 +185,3 @@ LOGIN_URL = "login"
 #LOGIN_REDIRECT_URL = "user_home"
 
 AUTH_USER_MODEL = "PunPals.CustomUser"
-
-# https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
