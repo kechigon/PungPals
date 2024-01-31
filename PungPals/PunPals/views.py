@@ -179,10 +179,10 @@ class RegisterResult3(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, 
                 senseki3.outNum += 1
 
             senseki3.rankMean = (1 * senseki3.firstNum + 2 * senseki3.secondNum + 3 * senseki3.thirdNum) / float(senseki3.gameNum)
-            senseki3.firstRate = senseki3.firstNum / float(senseki3.gameNum)
-            senseki3.secondRate = senseki3.secondNum / float(senseki3.gameNum)
-            senseki3.thirdRate = senseki3.thirdNum / float(senseki3.gameNum)
-            senseki3.outRate = senseki3.outNum / float(senseki3.gameNum)
+            senseki3.firstRate = senseki3.firstNum / float(senseki3.gameNum) * 100
+            senseki3.secondRate = senseki3.secondNum / float(senseki3.gameNum) * 100
+            senseki3.thirdRate = senseki3.thirdNum / float(senseki3.gameNum) * 100
+            senseki3.outRate = senseki3.outNum / float(senseki3.gameNum) * 100
             senseki3.scoreMean = senseki3.scoreSum / float(senseki3.gameNum)
 
             senseki3.save()
@@ -240,11 +240,11 @@ class RegisterResult4(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, 
                 senseki4.outNum += 1
 
             senseki4.rankMean = (1 * senseki4.firstNum + 2 * senseki4.secondNum + 3 * senseki4.thirdNum + 4 * senseki4.fourthNum) / float(senseki4.gameNum)
-            senseki4.firstRate = senseki4.firstNum / float(senseki4.gameNum)
-            senseki4.secondRate = senseki4.secondNum / float(senseki4.gameNum)
-            senseki4.thirdRate = senseki4.thirdNum / float(senseki4.gameNum)
-            senseki4.fourthRate = senseki4.fourthNum / float(senseki4.gameNum)
-            senseki4.outRate = senseki4.outNum / float(senseki4.gameNum)
+            senseki4.firstRate = senseki4.firstNum / float(senseki4.gameNum) * 100
+            senseki4.secondRate = senseki4.secondNum / float(senseki4.gameNum) * 100
+            senseki4.thirdRate = senseki4.thirdNum / float(senseki4.gameNum) * 100
+            senseki4.fourthRate = senseki4.fourthNum / float(senseki4.gameNum) * 100
+            senseki4.outRate = senseki4.outNum / float(senseki4.gameNum) * 100
             senseki4.scoreMean = senseki4.scoreSum / float(senseki4.gameNum)
 
             senseki4.save()
@@ -310,10 +310,10 @@ class DeleteResult3(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, De
 
             if senseki.gameNum > 0:
                 senseki.rankMean = (1 * senseki.firstNum + 2 * senseki.secondNum + 3 * senseki.thirdNum) / float(senseki.gameNum)
-                senseki.firstRate = senseki.firstNum / float(senseki.gameNum)
-                senseki.secondRate = senseki.secondNum / float(senseki.gameNum)
-                senseki.thirdRate = senseki.thirdNum / float(senseki.gameNum)
-                senseki.outRate = senseki.outNum / float(senseki.gameNum)
+                senseki.firstRate = senseki.firstNum / float(senseki.gameNum) * 100
+                senseki.secondRate = senseki.secondNum / float(senseki.gameNum) * 100
+                senseki.thirdRate = senseki.thirdNum / float(senseki.gameNum) * 100
+                senseki.outRate = senseki.outNum / float(senseki.gameNum) * 100
                 senseki.scoreMean = senseki.scoreSum / float(senseki.gameNum)
             else:
                 senseki.rankMean = 0
@@ -381,11 +381,11 @@ class DeleteResult4(UserDispatchMixin, RoomDispatchMixin, LoginRequiredMixin, De
 
             if senseki.gameNum > 0:
                 senseki.rankMean = (1 * senseki.firstNum + 2 * senseki.secondNum + 3 * senseki.thirdNum + 4 * senseki.fourthNum) / float(senseki.gameNum)
-                senseki.firstRate = senseki.firstNum / float(senseki.gameNum)
-                senseki.secondRate = senseki.secondNum / float(senseki.gameNum)
-                senseki.thirdRate = senseki.thirdNum / float(senseki.gameNum)
-                senseki.fourthRate = senseki.fourthNum / float(senseki.gameNum)
-                senseki.outRate = senseki.outNum / float(senseki.gameNum)
+                senseki.firstRate = senseki.firstNum / float(senseki.gameNum) * 100
+                senseki.secondRate = senseki.secondNum / float(senseki.gameNum) * 100
+                senseki.thirdRate = senseki.thirdNum / float(senseki.gameNum) * 100
+                senseki.fourthRate = senseki.fourthNum / float(senseki.gameNum) * 100
+                senseki.outRate = senseki.outNum / float(senseki.gameNum) * 100
                 senseki.scoreMean = senseki.scoreSum / float(senseki.gameNum)
             else:
                 senseki.rankMean = 0
